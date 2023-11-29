@@ -20,7 +20,9 @@
    ;; TEMP see `Input` and `Output`
    [current_input current-input-port]
    [current_output current-output-port]
-   [current_error current-error-port]))
+   [current_error current-error-port]
+   [open_output_string open-output-string]
+   [get_output_string get-output-string]))
 
 (define-name-root Input
   #:fields
