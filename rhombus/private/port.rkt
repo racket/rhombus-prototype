@@ -21,7 +21,9 @@
    Output
    [current_input current-input-port]
    [current_output current-output-port]
-   [current_error current-error-port]))
+   [current_error current-error-port]
+   [open_output_string open-output-string]
+   [get_output_string get-output-string]))
 
 (define-annotation-syntax Input (identifier-annotation #'input-port? #'()))
 (define-annotation-syntax Output (identifier-annotation #'output-port? #'()))
