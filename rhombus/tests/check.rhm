@@ -1,0 +1,14 @@
+#lang rhombus
+
+// I used the check to check the check…
+check:
+  ~eval
+  check: values(1, [2, 3])
+         ~matches values(a, [b, c])
+  ~completes
+  
+check:
+  ~eval
+  check: values(1, [2, 3])
+         ~matches a
+  ~raises "matching a"
