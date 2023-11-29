@@ -4,6 +4,7 @@
          "name-root.rkt"
          (submod "annotation.rkt" for-class)
          "function-arity-key.rkt"
+         "define-arity.rkt"
          "static-info.rkt"
          (submod "define-arity.rkt" for-info))
 
@@ -21,8 +22,8 @@
    [current_input current-input-port]
    [current_output current-output-port]
    [current_error current-error-port]
-   [open_output_string open-output-string]
-   [get_output_string get-output-string]))
+   [open_output_string Port.open_output_string]
+   [get_output_string Port.get_output_string]))
 
 (define-name-root Input
   #:fields
@@ -39,3 +40,13 @@
 (define-static-info-syntaxes (current-input-port current-output-port current-error-port)
   (#%function-arity 3)
   (#%indirect-static-info indirect-function-static-info))
+
+(define/arity Port.open_output_string
+  (case-lambda
+    [() (open-output-string)]
+    [(name) (open-output-string name)]))
+
+(define/arity (Port.get_output_string port)
+  ;; HELP: how do I say the result of this call is a string?
+  ;; #:static-infos ((#%call-result #,string-static-infos))
+  (string->immutable-string (get-output-string port)))
