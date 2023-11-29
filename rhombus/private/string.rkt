@@ -2,6 +2,7 @@
 (require (for-syntax racket/base
                      syntax/parse/pre)
          racket/symbol
+         (only-in racket/string string-contains?)
          racket/keyword
          "provide.rkt"
          "define-operator.rkt"
@@ -62,6 +63,7 @@
   ()
   #:methods
   ([length String.length]
+   [contains String.contains]
    [append String.append]
    [substring String.substring]
    [utf8_bytes String.utf8_bytes]
@@ -94,6 +96,7 @@
   ([to_string String.to_string]
    [append String.append]
    [length String.length]
+   [contains String.contains]
    [substring String.substring]
    [utf8_bytes String.utf8_bytes]
    [latin1_bytes String.latin1_bytes]
@@ -183,6 +186,11 @@
 (define/method (String.to_number s)
   (check-readable-string who s)
   (string->number s))
+
+(define/method (String.contains s1 s2)
+  #:inline
+  #:primitive (string-contains?)
+  (string-contains? s1 s2))
 
 (define/method String.substring
   #:inline
