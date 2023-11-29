@@ -2,13 +2,34 @@
 
 // I used the check to check the check…
 check:
-  ~eval
   check: values(1, [2, 3])
          ~matches values(a, [b, c])
   ~completes
-  
+
+macro 'with_err_to_string:
+         $body ...':
+  'block:
+     def old_port = Port.current_error()
+     def new_port = Port.open_output_string()
+     Port.current_error(new_port)
+     block:
+       $body ...
+     Port.current_error(old_port)
+     Port.get_output_string(new_port)'
+
 check:
-  ~eval
-  check: values(1, [2, 3])
-         ~matches a
-  ~raises "matching a"
+  def the_output = with_err_to_string:
+    check: values(1, [2, 3])
+           ~matches a
+  
+  the_output.contains("got: values [1, [2, 3]]") && the_output.contains("expected: matching a")
+  ~is #true
+
+check:
+  def the_output = with_err_to_string:
+    check: values(1, [2, 3])
+           ~matches values(a, b, c)
+  
+  the_output.contains("got: values [1, [2, 3]]") && the_output.contains("expected: matching values [a, b, c]")
+  ~is #true
+
