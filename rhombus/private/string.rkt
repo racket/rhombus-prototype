@@ -188,8 +188,8 @@
   (string->number s))
 
 (define/method (String.contains s1 s2)
-  #:inline
-  #:primitive (string-contains?)
+  (check-readable-string who s1)
+  (check-readable-string who s2)
   (string-contains? s1 s2))
 
 (define/method String.substring
