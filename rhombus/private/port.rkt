@@ -3,6 +3,7 @@
          "provide.rkt"
          "name-root.rkt"
          (submod "annotation.rkt" for-class)
+         (submod "string.rkt" static-infos)
          "function-arity-key.rkt"
          "define-arity.rkt"
          "static-info.rkt"
@@ -42,11 +43,14 @@
   (#%indirect-static-info indirect-function-static-info))
 
 (define/arity Port.open_output_string
+  #:inline
+  #:primitive (open-output-string)
   (case-lambda
     [() (open-output-string)]
     [(name) (open-output-string name)]))
 
 (define/arity (Port.get_output_string port)
-  ;; HELP: how do I say the result of this call is a string?
-  ;; #:static-infos ((#%call-result #,string-static-infos))
+  #:inline
+  #:primitive (get-output-string)
+  #:static-infos ((#%call-result #,string-static-infos))
   (string->immutable-string (get-output-string port)))
