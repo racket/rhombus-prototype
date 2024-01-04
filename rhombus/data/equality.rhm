@@ -1,0 +1,32 @@
+#lang rhombus/and_meta
+
+
+export:
+  equality
+
+
+import:
+  lib("racket/base.rkt"):
+    meta
+    expose: #{generate-temporaries}
+  lib("racket/base.rkt").#{eq-hash-code}
+
+
+class_clause.macro 'equality: $key_expr; ...':
+  def [key_id, ...] = #{generate-temporaries}([key_expr, ...])
+  'internal PrivateForEquals
+   private implements Equatable
+
+   private method $key_id(): $key_expr
+   ...
+
+   private override method equals(other, recur):
+     (other is_a PrivateForEquals)
+       $('&& (recur(this . $key_id(), (other :~ PrivateForEquals) . $key_id()))') ...
+
+   private override method hash_code(recur):
+     let code = #{eq-hash-code}(PrivateForEquals)
+     let code: Equatable.hash_code_combine(code, recur(this . $key_id()))
+     ...
+     code'
+
