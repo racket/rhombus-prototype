@@ -37,6 +37,8 @@ block:
     "Hello".grapheme_count(2) ~is 3
     "Hello".grapheme_span(2, 4) ~is 1
     "Hello".grapheme_count(2, 4) ~is 2
+    "Hello".contains("ello") ~is #true
+    "Hello".contains("howdy") ~is #false
     
 check:
   dynamic("hello").length() ~is 5
@@ -62,6 +64,8 @@ check:
   dynamic("Hello").grapheme_count(2) ~is 3
   dynamic("Hello").grapheme_span(2, 4) ~is 1
   dynamic("Hello").grapheme_count(2, 4) ~is 2
+  dynamic("Hello").contains("ello") ~is #true
+  dynamic("Hello").contains("howdy") ~is #false
     
 check:
   String.length("hello") ~is 5
@@ -85,6 +89,8 @@ check:
   String.grapheme_count("Hello", 2) ~is 3
   String.grapheme_span("Hello", 2, 4) ~is 1
   String.grapheme_count("Hello", 2, 4) ~is 2
+  String.contains("Hello", "ello") ~is #true
+  String.contains("Hello", "howdy") ~is #false
 
 block:
   import:

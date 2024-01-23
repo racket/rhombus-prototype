@@ -94,6 +94,9 @@ expr.macro
                 #'$result2.mode)'
 
 expr.macro
+| 'matcher(~matches, : values($bindings, ...))':
+    'fun | (): (fun | ($bindings, ...): #true | (&_): #false)
+         | (x): $("values " +& '[$bindings, ...]')'
 | 'matcher(~matches, : $binding)':
     'fun | (): (fun | ($binding): #true | (& _): #false)
          | (x): $("" +& '$binding')'
