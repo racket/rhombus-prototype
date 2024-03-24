@@ -1447,7 +1447,9 @@
 (define (add-span-srcloc start-t end-t l
                          #:alt [alt-start-t #f])
   (define (add-srcloc l s-loc loc)
-    (cons (let* ([stx (datum->syntax* #f (car l) loc stx-for-original-property)])
+    (cons (let* ([stx (syntax-property
+                       (datum->syntax* #f (car l) loc stx-for-original-property)
+                       'identifier-as-keyword #t)])
             (if (syntax? start-t)
                 (let* ([stx (syntax-property-copy stx start-t syntax-raw-property)]
                        [stx (syntax-property-copy stx start-t syntax-raw-prefix-property)]
